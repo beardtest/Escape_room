@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float speed = 5;
     [SerializeField] private LayerMask ground;
 
-    private float jumpForce = 20;
+    private float jumpForce = 10;
 
 
     // Start is called before the first frame update
@@ -32,13 +32,14 @@ public class Player : MonoBehaviour
     private void Movement()
     {
         var deadZone = 0.25;
+        var HMovement = Input.GetAxis("Horizontal");
 
         if (Input.GetAxis("Jump") > 0.1 && coll.IsTouchingLayers(ground))
         {
             Jump();
         }
 
-        else if (Input.GetAxis("Horizontal") < -deadZone)
+        else if (HMovement < -deadZone)
         {
 
             rb.velocity = new Vector2(-speed, rb.velocity.y);
@@ -47,7 +48,7 @@ public class Player : MonoBehaviour
 
         }
 
-        else if (Input.GetAxis("Horizontal") > deadZone)
+        else if (HMovement > deadZone)
         {
 
             rb.velocity = new Vector2(speed, rb.velocity.y);
@@ -55,12 +56,6 @@ public class Player : MonoBehaviour
 
         }
 
-        else
-        {
-
-            rb.velocity = Vector2.zero;
-
-        }
     }
 
     private void Jump()
