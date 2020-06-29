@@ -28,7 +28,9 @@ public class Player : MonoBehaviour
 
     private void Movement()
     {
-        if (Input.GetAxis("Horizontal") < 0)
+        var deadZone = 0.25;
+
+        if (Input.GetAxis("Horizontal") < -deadZone)
         {
 
             rb.velocity = new Vector2(-speed, rb.velocity.y);
@@ -36,7 +38,7 @@ public class Player : MonoBehaviour
 
         }
 
-        else if (Input.GetAxis("Horizontal") > 0)
+        else if (Input.GetAxis("Horizontal") > deadZone)
         {
 
             rb.velocity = new Vector2(speed, rb.velocity.y);
