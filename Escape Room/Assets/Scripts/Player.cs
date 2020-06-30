@@ -7,12 +7,15 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D rb;
     private Collider2D coll;
-
+    
+    //data collection within unity
     [SerializeField] private float speed = 5;
     [SerializeField] private LayerMask ground;
 
+    //variable init
     private float jumpForce = 10;
     private Vector2 ClickRange = new Vector2(3,3);
+    private bool CanMouseFire = true;
 
 
     // Start is called before the first frame update
@@ -26,9 +29,11 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         MouseCapture();
         Movement();
+        if(Input.GetButton("Fire1")){
+            MouseInteraction();
+        }
 
     }
 
@@ -74,16 +79,23 @@ public class Player : MonoBehaviour
         //variable to work out mouse distance from player
         Vector2 mouse2player = mouse - Pposition;
 
+        //form here the class simply sets the variable true or false based on how close the mouse is to the player
         if (mouse2player.x > ClickRange.x || mouse2player.x < -ClickRange.x){
-            Debug.Log("out of bounds");
+            CanMouseFire = false;
         }
 
         else if (mouse2player.y > ClickRange.y || mouse2player.y < -ClickRange.y){
-            Debug.Log("out of bounds");
+            CanMouseFire = false;
         }
 
         else{
-            Debug.Log("in Bounds");
+            CanMouseFire = true;
+        }
+    }
+
+    private void MouseInteraction(){
+        if(Input.GetButton("Fire1") && CanMouseFire){
+            Debug.Log("firin' ma lazer");
         }
     }
 }
