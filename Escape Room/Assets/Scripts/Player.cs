@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask ground;
 
     private float jumpForce = 10;
+    private Vector2 ClickRange = new Vector2(3,3);
 
 
     // Start is called before the first frame update
@@ -25,6 +26,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        MouseCapture();
         Movement();
 
     }
@@ -61,5 +64,26 @@ public class Player : MonoBehaviour
     private void Jump()
     {
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+    }
+
+    private void MouseCapture(){
+        //getting mouse position on screen as well as players position
+        Vector2 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 Pposition = new Vector2(rb.position.x, rb.position.y);
+
+        //variable to work out mouse distance from player
+        Vector2 mouse2player = mouse - Pposition;
+
+        if (mouse2player.x > ClickRange.x || mouse2player.x < -ClickRange.x){
+            Debug.Log("out of bounds");
+        }
+
+        else if (mouse2player.y > ClickRange.y || mouse2player.y < -ClickRange.y){
+            Debug.Log("out of bounds");
+        }
+
+        else{
+            Debug.Log("in Bounds");
+        }
     }
 }
